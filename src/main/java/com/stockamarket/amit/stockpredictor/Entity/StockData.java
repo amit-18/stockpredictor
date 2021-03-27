@@ -17,7 +17,7 @@ public class StockData implements Serializable{
     @SerializedName("Meta Data")
     @Expose
     private MetaData metaData;
-    @SerializedName("Time Series (Daily)")
+    @SerializedName(value = "Time Series (Daily)", alternate = {"Time Series (Weekly)","Time Series (Monthly)","Time Series (Intraday)"})
     @Expose
     private Map<String, OHLC> timeSeries;
 }

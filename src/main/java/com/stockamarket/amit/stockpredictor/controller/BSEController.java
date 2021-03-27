@@ -3,6 +3,7 @@ package com.stockamarket.amit.stockpredictor.controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
+import com.stockamarket.amit.stockpredictor.Entity.OHLC;
 import com.stockamarket.amit.stockpredictor.Entity.StockData;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
@@ -18,6 +19,9 @@ import reactor.netty.http.client.HttpClient;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -29,17 +33,16 @@ public class BSEController {
     @GetMapping("/getData")
     public ResponseEntity printData() throws Exception {
         log.info("Recieved request at getData");
-        String endpoint = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=RELIANCE.BSE&outputsize=full&apikey=demo";
+        String symbol = "INFY.BSE";
+        String api = "QTET1VQSNTE48TKV";
+        String endpoint = String.format("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=%s&outputsize=full&apikey=%s",symbol,api);
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         try {
             Gson gson = new Gson();
-//            String body = restTemplate.exchange(endpoint, HttpMethod.GET, entity, String.class).getBody();
             StockData data = gson.fromJson(restTemplate.exchange(endpoint, HttpMethod.GET, entity, String.class).getBody(), new TypeToken<StockData>() {
             }.getType());
-//            StockData dataa = gson.fromJson(restTemplate.getForEntity(endpoint, String.class).getBody(),new TypeToken<StockData>() {
-//            }.getType());
             return ResponseEntity.ok().body(data);
         } catch (Exception e) {
             log.info(e.getMessage());
