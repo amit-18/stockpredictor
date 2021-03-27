@@ -1,20 +1,29 @@
 package com.stockamarket.amit.stockpredictor.Entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-public class MetaData {
-    @JsonProperty("1. Information")
+public class MetaData implements Serializable {
+    @SerializedName("1. Information")
+    @Expose
     private String information;
-    @JsonProperty("2. Symbol")
+    @Expose
+    @SerializedName("2. Symbol")
     private String symbol;
-    @JsonProperty("3. Last Refreshed")
+    @Expose
+    @SerializedName("3. Last Refreshed")
     private String last_refreshed;
-    @JsonProperty("4. Output Size")
+    @Expose
+    @SerializedName("4. Output Size")
     private String output_size;
-    @JsonProperty("5. Time Zone")
+    @Expose
+    @SerializedName("5. Time Zone")
     private String timezone;
 }
