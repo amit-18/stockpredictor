@@ -23,5 +23,6 @@ public class Constants {
     public static String TOP_VOLUME_URL = "https://www1.nseindia.com/live_market/dynaContent/live_analysis/most_active/allTopVolume1.json";
     public static String NEW_CHART_DATA_URL = "https://www1.nseindia.com/ChartApp/install/charts/data/GetHistoricalNew.jsp";
     public static String API_KEY = "QTET1VQSNTE48TKV";
-    public static String HISTORICAL_DATA_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=%s.BSE&outputsize=full&apikey=%s";
+    public static String HISTORICAL_DATA_URL_WITH_ID = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=BSE:%s&outputsize=full&apikey=%s";
+    public static String HISTORICAL_DATA_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=%s.BSE&outputsize=full&apikey=%s";
 }

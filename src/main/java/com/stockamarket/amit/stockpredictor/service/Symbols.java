@@ -1,5 +1,7 @@
 package com.stockamarket.amit.stockpredictor.service;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,17 +38,24 @@ public class Symbols {
     public List<String> getStockSymbols() {
         createConnection();
         String year_high = restTemplate.exchange(YEAR_HIGH_URL, HttpMethod.GET, entity, String.class).getBody();
-        String year_low = restTemplate.exchange(YEAR_LOW_URL, HttpMethod.GET, entity, String.class).getBody();
         String top_gainers = restTemplate.exchange(GAINERS_URL, HttpMethod.GET, entity, String.class).getBody();
-        String top_losers = restTemplate.exchange(LOSERS_URL, HttpMethod.GET, entity, String.class).getBody();
         String top_value = restTemplate.exchange(TOP_VALUE_URL, HttpMethod.GET, entity, String.class).getBody();
         String top_volume = restTemplate.exchange(TOP_VOLUME_URL, HttpMethod.GET, entity, String.class).getBody();
         extractFromJSON(year_high);
-        extractFromJSON(year_low);
         extractFromJSON(top_gainers);
-        extractFromJSON(top_losers);
         extractFromJSON(top_value);
         extractFromJSON(top_volume);
+        try {
+            String line = "";
+            String splitBy = ",";
+            BufferedReader br = new BufferedReader(new FileReader("src/main/resources/Sensex.csv"));
+            while ((line = br.readLine()) != null) {
+                String[] stock = line.split(splitBy);
+                symbols.add(stock[2]);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return symbols.stream().distinct().collect(Collectors.toList());
     }
 
